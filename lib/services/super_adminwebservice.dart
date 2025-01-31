@@ -1282,4 +1282,20 @@ Future<void> SuperadmindeleteQuizAPI({
       }
     }
   }
+
+   Future<CourseCountsResponse> fetchCourseCounts(String token) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/superadmin/getCount'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return CourseCountsResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load course counts: ${response.statusCode}');
+    }
+  }
 }

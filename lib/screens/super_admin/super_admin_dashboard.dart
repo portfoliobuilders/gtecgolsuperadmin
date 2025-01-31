@@ -180,9 +180,9 @@ class ContentArea extends StatelessWidget {
       case 'Live':
         return AdminAddLiveCourse();
       case 'Dashboard':
-        return DashboardScreennew();
+        return EducationDashboards();
       default:
-        return DashboardScreennew();
+        return EducationDashboards();
     }
   }
 }

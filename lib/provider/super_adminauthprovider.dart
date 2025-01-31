@@ -22,6 +22,11 @@ class SuperAdminauthprovider with ChangeNotifier {
 
   int? courseId;
 
+  String? _error;
+  CourseCountsResponse? _courseCounts;
+  CourseCountsResponse? get courseCounts => _courseCounts;
+  String? get error => _error;
+
   int? assignmentId;
   final Map<int, List<SuperSubmission>> _submissions = {};
 
@@ -1069,5 +1074,20 @@ Future<void> SuperadmindeleteQuizProvider(int courseId,int moduleId, int quizId)
     }
   }
 }
+
+Future<void> fetchCourseCounts() async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      _courseCounts = await _apiService.fetchCourseCounts( _token!);
+    } catch (e) {
+      _error = e.toString();
+    }
+
+    _isLoading = false;
+    notifyListeners();
+  }
 }
 
