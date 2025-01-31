@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gtecgolsuperadmin/provider/authprovider.dart';
 import 'package:gtecgolsuperadmin/provider/super_adminauthprovider.dart';
 import 'package:gtecgolsuperadmin/screens/super_admin/login/super_admin_login.dart';
 import 'package:gtecgolsuperadmin/superadminsplashscreen.dart';
@@ -17,8 +18,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => SuperAdminauthprovider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SuperAdminauthprovider()),
+        ChangeNotifierProvider(create:  (_) => AdminAuthProvider()),
+        // Add other providers here if needed
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'GTEC LMS',
@@ -28,4 +33,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

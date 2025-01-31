@@ -29,7 +29,7 @@ class _AdminBottomState extends State<AdminBottom> {
       await Provider.of<SuperAdminauthprovider>(context, listen: false).Superlogout(); // Call the provider function
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AdminLoginScreen()),
+        MaterialPageRoute(builder: (context) => SuperAdminLoginScreen()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

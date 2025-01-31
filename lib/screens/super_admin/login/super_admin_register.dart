@@ -255,7 +255,7 @@ class _AdminregisterScreenState extends State<AdminregisterScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            AdminLoginScreen()),
+                                            SuperAdminLoginScreen()),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(

@@ -150,7 +150,7 @@ class SuperAdminauthprovider with ChangeNotifier {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => AdminDashboardScreen()),
+          MaterialPageRoute(builder: (context) => SuperAdminDashboardScreen()),
         );
 
         notifyListeners();
@@ -192,13 +192,13 @@ class SuperAdminauthprovider with ChangeNotifier {
       // Navigate to StudentLMSHomePage if the user is logged in
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AdminDashboardScreen()),
+        MaterialPageRoute(builder: (context) => SuperAdminDashboardScreen()),
       );
     } else {
       // Navigate to UserLogin page if the user is not logged in
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AdminLoginScreen()),
+        MaterialPageRoute(builder: (context) => SuperAdminLoginScreen()),
       );
     }
     notifyListeners();

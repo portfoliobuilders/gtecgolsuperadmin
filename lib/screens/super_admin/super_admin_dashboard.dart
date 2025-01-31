@@ -10,14 +10,14 @@ import 'package:gtecgolsuperadmin/screens/super_admin/widgets/super_adminsearchf
 import 'package:gtecgolsuperadmin/screens/super_admin/widgets/super_adminsidebarbutton.dart';
 import 'package:gtecgolsuperadmin/screens/super_admin/widgets/super_adminusercard.dart';
 
-class AdminDashboardScreen extends StatefulWidget {
-  const AdminDashboardScreen({super.key});
+class SuperAdminDashboardScreen extends StatefulWidget {
+  const SuperAdminDashboardScreen({super.key});
 
   @override
-  _AdminDashboardScreenState createState() => _AdminDashboardScreenState();
+  _SuperAdminDashboardScreenState createState() => _SuperAdminDashboardScreenState();
 }
 
-class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
+class _SuperAdminDashboardScreenState extends State<SuperAdminDashboardScreen> {
   String currentRoute = '';
   TextEditingController searchController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

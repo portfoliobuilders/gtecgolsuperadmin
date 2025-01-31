@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gtecgolsuperadmin/provider/super_adminauthprovider.dart';
+import 'package:gtecgolsuperadmin/screens/admin/login/admin_login.dart';
 import 'package:gtecgolsuperadmin/screens/super_admin/login/super_admin_register.dart';
 import 'package:provider/provider.dart';
 
-class AdminLoginScreen extends StatefulWidget {
+class SuperAdminLoginScreen extends StatefulWidget {
   @override
-  State<AdminLoginScreen> createState() => _AdminLoginScreenState();
+  State<SuperAdminLoginScreen> createState() => _SuperAdminLoginScreenState();
 }
 
-class _AdminLoginScreenState extends State<AdminLoginScreen> {
+class _SuperAdminLoginScreenState extends State<SuperAdminLoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
@@ -186,11 +187,27 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 5),
                           TextButton(
                             onPressed: () {},
                             child: const Text(
                               'Forgot Password?',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                          ),
+                           const SizedBox(height: 5),
+                          TextButton(
+                            onPressed: () {
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AdminLoginScreen()),
+                               );
+                            },
+                            child: const Text(
+                              'Login as admin?',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 14),
                             ),
