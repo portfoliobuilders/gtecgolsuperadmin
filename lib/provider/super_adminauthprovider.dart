@@ -1037,5 +1037,37 @@ Future<void> SuperAdmindeleteLiveprovider(int batchId, int courseId) async {
     rethrow;
   }
 }
+
+Future<void> SuperadmindeleteQuizProvider(int courseId,int moduleId, int quizId) async {
+  if (_token == null) throw Exception('Token is missing');
+
+  try {
+    await _apiService.SuperadmindeleteQuizAPI(
+      token: _token!,
+      courseId: courseId,
+      moduleId: moduleId,
+      quizId: quizId,
+    );
+
+    // Only remove from local state if API call was successful
+    _moduleQuiz.forEach((key, quizzes) {
+      _moduleQuiz[key] = quizzes.where((quiz) => quiz.quizId != quizId).toList();
+    });
+
+    notifyListeners();
+  } catch (e) {
+    // Log the error for debugging
+    print('Error in deleteQuizProvider: $e');
+    
+    // Rethrow with a more user-friendly message
+    if (e.toString().contains('Quiz not found')) {
+      throw Exception('Quiz not found or already deleted');
+    } else if (e.toString().contains('Network error')) {
+      throw Exception('Please check your internet connection and try again');
+    } else {
+      throw Exception('Unable to delete quiz. Please try again later.');
+    }
+  }
+}
 }
 

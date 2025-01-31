@@ -1102,64 +1102,90 @@ Widget _buildQuizList(List<SuperAdminQuizModel> quiz) {
                   _showEditQuizDialog(context, quizItem);
                 },
               ),
-              IconButton(
-                icon: const Icon(Icons.delete_sweep_outlined, color: Colors.black),
-                onPressed: () async {
-                  final confirm = await showDialog<bool>(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Delete Quiz'),
-                        content: const Text('Are you sure you want to delete this quiz?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(false),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(true),
-                            child: const Text('Delete'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+             IconButton(
+                  icon: const Icon(Icons.delete_sweep_outlined,
+                      color: Colors.black),
+                  onPressed: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Delete Quiz'),
+                          content: const Text(
+                              'Are you sure you want to delete this quiz?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text('Delete'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
 
-                  if (confirm == true) {
-                    try {
-                      // Your logic for deleting quiz
-                      await _deleteQuiz(quizItem.quizId);
+                    if (confirm == true) {
+                      try {
+                        final provider = Provider.of<SuperAdminauthprovider>(context,
+                            listen: false);
+                        await provider.SuperadmindeleteQuizProvider(quizItem.courseId,
+                            quizItem.moduleId, quizItem.quizId);
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Quiz deleted successfully!'),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
-                    } catch (error) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Failed to delete quiz: $error'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Quiz deleted successfully!'),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      } catch (error) {
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Failed to delete quiz: $error'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
                     }
-                  }
-                },
-              ),
-
-              ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => QuizSubmissionPage(
-                              quizId: quizItem.quizId,
-                              ),
+                  },
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuizSubmissionPage(
+                          quizId: quizItem.quizId,
+                          title: quizItem.name,
                         ),
-                      );
-                    },
-                    child: Text("View Submissions")),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "View Submissions",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.orange.shade500),
+                  ),
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                    side: MaterialStateProperty.all(
+                        BorderSide(color: Colors.orange.shade100, width: 1)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    )),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                    elevation: MaterialStateProperty.all(0),
+                  ),
+                ),
 
             ],
           ),

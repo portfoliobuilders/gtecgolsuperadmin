@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:gtecgolsuperadmin/models/super_admin_model.dart';
 
@@ -1242,4 +1243,43 @@ Future<String> SuperAdmindeleteAdminLive(int batchId, String token, int courseId
     throw Exception("Error deleting Live: $e");
   }
 }
+
+Future<void> SuperadmindeleteQuizAPI({
+    required String token,
+    required int courseId,
+    required int moduleId,
+    required int quizId,
+  }) async {
+    try {
+      final url =
+          Uri.parse('$baseUrl/superadmin/deleteQuiz/$courseId/$moduleId/$quizId');
+
+      final response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      // Parse the response body
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        return; // Successful deletion
+      } else if (response.statusCode == 404) {
+        throw Exception('Quiz not found');
+      } else {
+        throw Exception(responseData['message'] ?? 'Failed to delete quiz');
+      }
+    } catch (e) {
+      if (e is FormatException) {
+        throw Exception('Invalid server response');
+      } else if (e is SocketException) {
+        throw Exception('Network error occurred');
+      } else {
+        throw Exception('Failed to delete quiz: $e');
+      }
+    }
+  }
 }

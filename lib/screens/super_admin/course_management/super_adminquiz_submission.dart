@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class QuizSubmissionPage extends StatefulWidget {
   final int quizId;
 
-  const QuizSubmissionPage({Key? key, required this.quizId}) : super(key: key);
+  const QuizSubmissionPage({Key? key, required this.quizId, required String title}) : super(key: key);
 
   @override
   State<QuizSubmissionPage> createState() => _QuizSubmissionPageState();
