@@ -80,6 +80,12 @@ class AdminAuthProvider with ChangeNotifier {
     return _moduleQuiz[moduleId] ?? [];
   }
 
+  
+  BatchTeacherModel? _batchteacherData;
+
+  BatchTeacherModel? get batchteacherData => _batchteacherData;
+
+
   List<AdminQuizModel> _quizzes = [];
 
   bool _isLoading = false;
@@ -1123,4 +1129,27 @@ class AdminAuthProvider with ChangeNotifier {
     _isLoading = false;
     notifyListeners();
 }
+
+Future<void> AdminfetchallteachersBatchProvider(
+      int courseId, int batchId) async {
+    if (_token == null) throw Exception('Token is missing');
+
+    try {
+      final response = await _apiService.AdminfetchTeachersBatchAPI(
+        _token!,
+        courseId,
+        batchId,
+      );
+
+      _batchteacherData = response;
+      print('Fetched batch data: $_batchteacherData');
+      print('Number of teachers: ${_batchteacherData?.teachers.length}');
+
+      notifyListeners();
+    } catch (e) {
+      print('Error fetching teachers: $e');
+      rethrow;
+    }
+  }
 }
+

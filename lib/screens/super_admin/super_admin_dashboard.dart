@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gtecgolsuperadmin/screens/admin/teacher_management/add_teacher_course_batch.dart';
 import 'package:gtecgolsuperadmin/screens/super_admin/batch_management/super_admin_addtobatch_course.dart';
 import 'package:gtecgolsuperadmin/screens/super_admin/course_management/super_admin_add_course.dart';
 import 'package:gtecgolsuperadmin/screens/super_admin/course_management/super_admin_see_allstudent.dart';
 import 'package:gtecgolsuperadmin/screens/super_admin/live_management/superadmin_live_management.dart';
+import 'package:gtecgolsuperadmin/screens/super_admin/teacher_management/superaddadd_teacher_course_batch.dart';
 import 'package:gtecgolsuperadmin/screens/super_admin/widgets/dashboard.dart';
 
 import 'package:gtecgolsuperadmin/screens/super_admin/widgets/super_adminbottom.dart';
@@ -126,7 +128,7 @@ class Sidebar extends StatelessWidget {
                         currentRoute: currentRoute,
                       ),
                     ),
-                    const SizedBox(height: 90),
+                    const SizedBox(height: 30),
    
                     AdminBottom(
                       onMenuItemSelected: onNavigate,
@@ -181,6 +183,8 @@ class ContentArea extends StatelessWidget {
         return AdminAddLiveCourse();
       case 'Dashboard':
         return EducationDashboards();
+         case 'teacher':
+        return superAdminAddTeacher();
       default:
         return EducationDashboards();
     }
@@ -250,6 +254,12 @@ class AdminMainMenu extends StatelessWidget {
               text: 'User Management',
               onTap: () => onNavigate('User'),
               selected: currentRoute == 'User',
+            ),
+             AdminSidebarButton(
+              icon: Icons.settings,
+              text: 'Teacher Management',
+              onTap: () => onNavigate('teacher'),
+              selected: currentRoute == 'teacher',
             ),
           ],
         ),

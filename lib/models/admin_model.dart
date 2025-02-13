@@ -592,4 +592,56 @@ class Batch {
       studentCount: json['studentCount'],
     );
   }
+
+  
+}
+class BatchTeacherModel {
+  final String message;
+  final int courseId;
+  final String courseName;
+  final int batchId;
+  final String batchName;
+  final List<Teacher> teachers;
+
+  BatchTeacherModel({
+    required this.message,
+    required this.courseId,
+    required this.courseName,
+    required this.batchId,
+    required this.batchName,
+    required this.teachers,
+  });
+
+  factory BatchTeacherModel.fromJson(Map<String, dynamic> json) {
+    return BatchTeacherModel(
+      message: json['message'],
+      courseId: json['courseId'],
+      courseName: json['courseName'],
+      batchId: json['batchId'],
+      batchName: json['batchName'],
+      teachers: (json['teachers'] as List)
+          .map((teacher) => Teacher.fromJson(teacher))
+          .toList(),
+    );
+  }
+}
+
+class Teacher {
+  final int teacherId;
+  final String name;
+  final String email;
+
+  Teacher({
+    required this.teacherId,
+    required this.name,
+    required this.email,
+  });
+
+  factory Teacher.fromJson(Map<String, dynamic> json) {
+    return Teacher(
+      teacherId: json['teacherId'],
+      name: json['name'],
+      email: json['email'],
+    );
+  }
 }

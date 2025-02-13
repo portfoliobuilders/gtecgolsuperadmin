@@ -1200,7 +1200,7 @@ class SuperAdminAPI {
     }
   }
 
-    Future<AdminLiveLinkResponse?> AdminfetchLiveAdmin(
+  Future<AdminLiveLinkResponse?> AdminfetchLiveAdmin(
       String token, int batchId) async {
     final url = Uri.parse('$baseUrl/superadmin/getLiveLinkbatch/$batchId');
     try {
@@ -1227,7 +1227,6 @@ class SuperAdminAPI {
       return null;
     }
   }
-
 
   Future<String> AdminpostLiveLink(
     String token,
@@ -1298,35 +1297,40 @@ class SuperAdminAPI {
     }
   }
 
-Future<String> AdmindeleteAdminLive(int courseId ,int batchId, String token) async {
-  final url = Uri.parse("$baseUrl/admin/deleteLiveLink/$courseId/$batchId");
-  print("Delete URL: $url"); // Log the URL
-  print("Token being used: $token"); // Log the token (be careful with this in production)
-  
-  try {
-    final response = await http.delete(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    
-    print("Response status code: ${response.statusCode}");
-    print("Response body: ${response.body}");
+  Future<String> AdmindeleteAdminLive(
+      int courseId, int batchId, String token) async {
+    final url = Uri.parse("$baseUrl/admin/deleteLiveLink/$courseId/$batchId");
+    print("Delete URL: $url"); // Log the URL
+    print(
+        "Token being used: $token"); // Log the token (be careful with this in production)
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data['message'] ?? "Live deleted successfully";
-    } else {
-      print("Headers sent: ${response.request?.headers}"); // Log request headers
-      throw Exception("Failed to delete live course. Status Code: ${response.statusCode}. Response: ${response.body}");
+    try {
+      final response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print("Response status code: ${response.statusCode}");
+      print("Response body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return data['message'] ?? "Live deleted successfully";
+      } else {
+        print(
+            "Headers sent: ${response.request?.headers}"); // Log request headers
+        throw Exception(
+            "Failed to delete live course. Status Code: ${response.statusCode}. Response: ${response.body}");
+      }
+    } catch (e) {
+      print("Exception details: $e");
+      throw Exception("Error deleting Live: $e");
     }
-  } catch (e) {
-    print("Exception details: $e");
-    throw Exception("Error deleting Live: $e");
   }
-} 
+
   Future<CourseCountsResponse> AdminfetchCourseCounts(String token) async {
     final response = await http.get(
       Uri.parse('$baseUrl/admin/getCount'),
@@ -1343,4 +1347,35 @@ Future<String> AdmindeleteAdminLive(int courseId ,int batchId, String token) asy
     }
   }
 
+  Future<BatchTeacherModel> AdminfetchTeachersBatchAPI(
+    String token,
+    int courseId,
+    int batchId,
+  ) async {
+    final url =
+        Uri.parse('$baseUrl/admin/getTeacherByBatchId/$courseId/$batchId');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        return BatchTeacherModel.fromJson(data);
+      } else {
+        throw Exception('Failed to fetch teachers: ${response.body}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      rethrow;
+    }
+  }
 }

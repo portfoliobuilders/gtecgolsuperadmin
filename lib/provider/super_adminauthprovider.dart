@@ -19,7 +19,9 @@ class SuperAdminauthprovider with ChangeNotifier {
   String? message;
   int? _currentUserId;
   List<SuperAdmincoursemodel> _course = []; // Correctly store courses
+  superBatchTeacherModel? _batchteacherData;
 
+  superBatchTeacherModel? get batchteacherData => _batchteacherData;
   int? courseId;
 
   String? _error;
@@ -1089,5 +1091,29 @@ Future<void> fetchCourseCounts() async {
     _isLoading = false;
     notifyListeners();
   }
+
+  Future<void> superAdminfetchallteachersBatchProvider(
+      int courseId, int batchId) async {
+    if (_token == null) throw Exception('Token is missing');
+
+    try {
+      final response = await _apiService.superAdminfetchTeachersBatchAPI(
+        _token!,
+        courseId,
+        batchId,
+      );
+
+      _batchteacherData = response;
+      print('Fetched batch data: $_batchteacherData');
+      print('Number of teachers: ${_batchteacherData?.teachers.length}');
+
+      notifyListeners();
+    } catch (e) {
+      print('Error fetching teachers: $e');
+      rethrow;
+    }
+  }
+
 }
+
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:gtecgolsuperadmin/screens/admin/batch_management/admin_addtobatch_course.dart';
 import 'package:gtecgolsuperadmin/screens/admin/batch_management/admin_live_management.dart';
 import 'package:gtecgolsuperadmin/screens/admin/course_management/admin_add_course.dart';
 import 'package:gtecgolsuperadmin/screens/admin/course_management/admin_see_allstudent.dart';
+import 'package:gtecgolsuperadmin/screens/admin/teacher_management/add_teacher_course_batch.dart';
 import 'package:gtecgolsuperadmin/screens/admin/widgets/bottom.dart';
 import 'package:gtecgolsuperadmin/screens/admin/widgets/dashboard.dart';
 import 'package:gtecgolsuperadmin/screens/admin/widgets/searchfiled.dart';
@@ -126,7 +126,7 @@ class Sidebar extends StatelessWidget {
                         currentRoute: currentRoute,
                       ),
                     ),
-                    const SizedBox(height: 90),
+                    const SizedBox(height: 30),
    
                     AdminBottom(
                       onMenuItemSelected: onNavigate,
@@ -170,21 +170,23 @@ class ContentArea extends StatelessWidget {
   }
 
   Widget _buildContent() {
-    switch (currentRoute) {
-      case 'Course':
-        return AdminAddCourse();
-      case 'User':
-        return UsersTabView();
-      case 'Students':
-        return AdminAddStudent();
-      case 'Live':
-        return AdminAddLiveCourse();
-      case 'Dashboard':
-        return Dashboards();
-      default:
-        return Dashboards();
-    }
+  switch (currentRoute) {
+    case 'Course':
+      return AdminAddCourse();
+    case 'User':
+      return UsersTabView();
+    case 'Students':
+      return AdminAddStudent();
+    case 'Live':
+      return AdminAddLiveCourse();
+    case 'Teachers': 
+      return AdminAddTeacher();
+    case 'Dashboard':
+    default:
+      return Dashboards();
   }
+}
+
 }
 
 class AdminMainMenu extends StatelessWidget {
@@ -246,10 +248,15 @@ class AdminMainMenu extends StatelessWidget {
               selected: currentRoute == 'Students',
             ),
             AdminSidebarButton(
-              icon: Icons.settings,
+              icon: Icons.person,
               text: 'User Management',
               onTap: () => onNavigate('User'),
               selected: currentRoute == 'User',
+            ), AdminSidebarButton(
+              icon: Icons.person_pin,
+              text: 'Teachers Management',
+              onTap: () => onNavigate('Teachers'),
+              selected: currentRoute == 'Teachers',
             ),
           ],
         ),
